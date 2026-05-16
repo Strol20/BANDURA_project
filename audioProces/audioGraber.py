@@ -48,7 +48,7 @@ def audioGraber(speakerName):
 
 #print(micro)
 
-#audioGraber('aaa')
+audioGraber('aaa')
 
 
 
