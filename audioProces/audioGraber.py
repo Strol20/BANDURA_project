@@ -21,14 +21,15 @@ def getLoopbackMicrophone(speakerName = None):
 
 
 
-def audioRecord(microphone = None, samplerate = 48000,durationSec=10):
+def audioRecord(microphone = None, samplerate = 41000,duration=10):
     # Тривалість в секундах
     microphone = getLoopbackMicrophone(microphone) #Перенести в audioGraber
     if (microphone == None):
         print("Не знайдено мікро, використовуємо за замовченням")
         return None
     with microphone.recorder(samplerate=samplerate,channels=2) as recorder:
-        data = recorder.record(numframes=samplerate * durationSec)
+        print("Початок запису на...", duration, "секунд")
+        data = recorder.record(numframes=samplerate * duration)
         sf.write("filename.wav", data, samplerate)
         print("КІНЕЦЬ ЗАПИСУ")
 
@@ -39,6 +40,8 @@ micro = sc.all_speakers()
 print(micro)
 
 audioRecord('aaa')
+
+
 
 
 
