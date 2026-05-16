@@ -1,7 +1,7 @@
 import asyncio
 
 from shazamio import Shazam
-
+import soundfile as sf
 from pathlib import Path
 
 
@@ -11,6 +11,7 @@ async def musicFinder():
     shazam = Shazam()
 
 
+    #Тестами було помічено, що апі аналізує не повністю аудіо файл. Зазвичай це не дуже популярні треки
 
     #file_path = r'D:\Platon\KPI_platon\SHAZAM_project\data\audioProces.wav'
 
@@ -20,15 +21,11 @@ async def musicFinder():
     file_path = output_dir / "audioProces.wav"
     print(f"Шукаємо музику за файлом: {file_path}")
     try:
-
         out = await shazam.recognize(str(file_path))
-
         print("Результат распознавания:")
-
         print(out)
 
     except Exception as eror:
-
         print(f"Помилка: {eror}")
 
 

@@ -23,7 +23,7 @@ def getLoopbackMicrophone(speakerName = None):
 
 
 
-def audioRecord(microphone = None, samplerate = 41000,duration=30):
+def audioRecord(microphone = None, samplerate = 44100,duration=30):
     # Тривалість в секундах
     microphone = getLoopbackMicrophone(microphone) #Перенести в audioGraber
     if (microphone == None):
