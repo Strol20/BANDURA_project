@@ -1,0 +1,37 @@
+*.wav
+# Базові компіляці Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# віртуальне оточення (Virtual Environments)
+.venv/
+venv/
+ENV/
+env/
+
+# Артефакти збірки (exe)
+build/
+dist/
+*.spec
+
+# Локальні бази даних
+*.db
+*.sqlite3
+*.json
+!config.json # Файл для інформації про аудіо аналізатори
+
+# Аудіозаписи (Захваченные треки для Shazam)
+*.wav
+*.mp3
+*.ogg
+shazam_input.wav
+
+# Налаштування IDE
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
