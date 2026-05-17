@@ -49,7 +49,7 @@ def audioRecord(microphone=None, duration=60, type_audio="full", iterations=1, s
                 print(data)
 
                 wav_io = io.BytesIO()
-                sf.write(wav_io, data, samplerate)
+                sf.write(wav_io, data, samplerate, format='WAV', subtype='PCM_16')
                 wav_bytes = wav_io.getvalue()
                 wav_io.close()
                 print("КІНЕЦЬ ЗАПИСУ.Повернення кеш файлу")
@@ -65,12 +65,12 @@ def audioRecord(microphone=None, duration=60, type_audio="full", iterations=1, s
             print("Непрвальний тип запису")
 
 
-def audioGraber(speakerName):
-    generator = audioRecord(get_loopback_microphone(), 5,"chunk",3)
+def audio_graber(speakerName, duration=60, type_audio="full", iterations=1, samplerate=44100):
+    generator = audioRecord(get_loopback_microphone(speakerName), duration, type_audio, iterations, samplerate)
     for i in range(3):
         result = next(generator)
-        print(result)
-        
+        print(i)
+
 
 
 #Для тесту
@@ -78,7 +78,7 @@ def audioGraber(speakerName):
 
 #print(micro)
 
-audioGraber('aaa')
+#audio_graber('aaa')
 
 
 
