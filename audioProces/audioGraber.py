@@ -1,3 +1,4 @@
+import io
 import soundcard as sc
 import soundfile as sf
 from pathlib import Path
@@ -7,6 +8,7 @@ def get_loopback_microphone(speaker_name=None):
     # print(sc.all_microphones(include_loopback=True))
 
     # Пошук мікро яке віртуально виводить звук з навушника (loopback)
+    #Пошук за назвою або обирає дефолтний
     if speaker_name is None:
         speaker = sc.default_speaker()
     else:
@@ -24,27 +26,51 @@ def get_loopback_microphone(speaker_name=None):
 
 
 
-def audioRecord(microphone=None, duration=60, cashe_audio=False, samplerate=44100):
+def audioRecord(microphone=None, duration=60, type_audio="full", iterations=1, samplerate=44100):
     # Тривалість в секундах
     microphone = get_loopback_microphone(microphone)  #Перенести в audioGraber
     if microphone is None:
         print("Не знайдено мікро, використовуємо за замовченням")
         return None
+    #Шлях до тимчасового файлу
     root_dir = Path(__file__).resolve().parent.parent
     output_dir = root_dir / "data"
     output_dir.mkdir(parents=True, exist_ok=True)
     file_path = output_dir / "audioProces.wav"
+
+
+    #Запис аудіо
     with microphone.recorder(samplerate=samplerate, channels=2) as recorder:
-        print("Початок запису на...", duration, "секунд")
-        data = recorder.record(numframes=samplerate * duration)
-        print(data)
-        sf.write(str(file_path), data, samplerate)
-        print("КІНЕЦЬ ЗАПИСУ. Файл знаходиться в:", file_path)
-        if cashe_audio is True:
-            return data
+        if type_audio == "chunk":
+            for i in range(iterations):
+                print("Початок запису на...", duration, "секунд. Залишилося", i, "ітерацій")
+                # samplerate * duration = дліна запису
+                data = recorder.record(numframes=samplerate * duration)
+                print(data)
+
+                wav_io = io.BytesIO()
+                sf.write(wav_io, data, samplerate)
+                wav_bytes = wav_io.getvalue()
+                wav_io.close()
+                print("КІНЕЦЬ ЗАПИСУ.Повернення кеш файлу")
+                yield wav_bytes
+        elif type_audio == "full":
+            print("Початок запису на...", duration, "секунд")
+            # samplerate * duration = дліна запису
+            data = recorder.record(numframes=samplerate * duration)
+            sf.write(str(file_path), data, samplerate)
+            print("КІНЕЦЬ ЗАПИСУ. Файл знаходиться в:", file_path)
+            yield str(file_path)
+        else:
+            print("Непрвальний тип запису")
+
 
 def audioGraber(speakerName):
-    audioRecord(get_loopback_microphone())
+    generator = audioRecord(get_loopback_microphone(), 5,"chunk",3)
+    for i in range(3):
+        result = next(generator)
+        print(result)
+        
 
 
 #Для тесту
