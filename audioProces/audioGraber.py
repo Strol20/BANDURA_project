@@ -45,20 +45,22 @@ def audioRecord(microphone=None, duration=60, type_audio="full", iterations=1, s
                 print("Початок запису на...", duration, "секунд. Залишилося", range(iterations), "ітерацій")
                 # samplerate * duration = дліна запису
                 data = recorder.record(numframes=samplerate * duration)
-                print("data")
+                print("Запис завершився, обробка...")
 
                 wav_io = io.BytesIO()
                 sf.write(wav_io, data, samplerate, format='WAV', subtype='PCM_16')
                 wav_bytes = wav_io.getvalue()
                 wav_io.close()
-                print("КІНЕЦЬ ЗАПИСУ.Повернення кеш файлу")
+                print("КІНЕЦЬ ЗАПИСУ ТА ОБРОБКИ.Повернення кеш файлу")
                 yield wav_bytes
         elif type_audio == "full":
+            #TODO: Аудіо повино зберігатися в кеші
             print("Початок запису на...", duration, "секунд")
             # samplerate * duration = дліна запису
             data = recorder.record(numframes=samplerate * duration)
             sf.write(str(file_path), data, samplerate)
-            print("КІНЕЦЬ ЗАПИСУ. Файл знаходиться в:", file_path)
+            print("Запис завершився, обробка...")
+            print("КІНЕЦЬ ЗАПИСУ ТА ОБРОБКИ. Файл знаходиться в:", file_path)
             yield str(file_path)
         else:
             print("Непрвальний тип запису")

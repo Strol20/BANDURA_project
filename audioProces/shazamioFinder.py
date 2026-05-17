@@ -3,7 +3,7 @@ import asyncio
 from shazamio import Shazam
 import soundfile as sf
 from pathlib import Path
-
+#TODO: Спробувати звернутися до скомпільованому коду з розширення для браузера
 
 async def shazamio_finder(file_path):
     shazam = Shazam()
@@ -16,8 +16,10 @@ async def shazamio_finder(file_path):
     output_dir.mkdir(parents=True, exist_ok=True)
     file_path = output_dir / "audioProces.wav"
     '''
-
-    print(f"Шукаємо музику за файлом: {file_path}")
+    if file_path is str:
+        print(f"Шукаємо музику за файлом: {file_path}")
+    else:
+        print("Шукаємо музику по бітам")
     try:
         out = await shazam.recognize(file_path)
         print("Результат распознавания:")
