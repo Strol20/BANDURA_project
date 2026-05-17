@@ -24,7 +24,7 @@ def get_loopback_microphone(speaker_name=None):
 
 
 
-def audioRecord(microphone=None, duration=30, samplerate=44100):
+def audioRecord(microphone=None, duration=60, cashe_audio=False, samplerate=44100):
     # Тривалість в секундах
     microphone = get_loopback_microphone(microphone)  #Перенести в audioGraber
     if microphone is None:
@@ -40,6 +40,8 @@ def audioRecord(microphone=None, duration=30, samplerate=44100):
         print(data)
         sf.write(str(file_path), data, samplerate)
         print("КІНЕЦЬ ЗАПИСУ. Файл знаходиться в:", file_path)
+        if cashe_audio is True:
+            return data
 
 def audioGraber(speakerName):
     audioRecord(get_loopback_microphone())
