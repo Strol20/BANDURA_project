@@ -28,7 +28,6 @@ def get_loopback_microphone(speaker_name=None):
 
 def audioRecord(microphone=None, duration=60, type_audio="full", iterations=1, samplerate=44100):
     # Тривалість в секундах
-    microphone = get_loopback_microphone(microphone)  #Перенести в audioGraber
     if microphone is None:
         print("Не знайдено мікро, використовуємо за замовченням")
         return None
@@ -66,10 +65,8 @@ def audioRecord(microphone=None, duration=60, type_audio="full", iterations=1, s
 
 
 def audio_graber(speakerName, duration=60, type_audio="full", iterations=1, samplerate=44100):
-    generator = audioRecord(get_loopback_microphone(speakerName), duration, type_audio, iterations, samplerate)
-    for i in range(3):
-        result = next(generator)
-        print(i)
+    return audioRecord(get_loopback_microphone(speakerName), duration, type_audio, iterations, samplerate)
+
 
 
 
