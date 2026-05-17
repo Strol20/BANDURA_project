@@ -28,5 +28,6 @@ duration=3
 type_audio="chunk"
 iterations=5
 samplerate=44100
-
+'''
 asyncio.run(music_finder(speaker_name,duration,type_audio,iterations,samplerate))
+'''
