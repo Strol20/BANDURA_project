@@ -19,9 +19,9 @@ async def shazamio_finder(file_path):
 
     print(f"Шукаємо музику за файлом: {file_path}")
     try:
-        out = await shazam.recognize(str(file_path))
+        out = await shazam.recognize(file_path)
         print("Результат распознавания:")
-        print(out)
+        #print(out)
         return out
 
     except Exception as eror:

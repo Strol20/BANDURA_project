@@ -42,10 +42,10 @@ def audioRecord(microphone=None, duration=60, type_audio="full", iterations=1, s
     with microphone.recorder(samplerate=samplerate, channels=2) as recorder:
         if type_audio == "chunk":
             for i in range(iterations):
-                print("Початок запису на...", duration, "секунд. Залишилося", i, "ітерацій")
+                print("Початок запису на...", duration, "секунд. Залишилося", range(iterations), "ітерацій")
                 # samplerate * duration = дліна запису
                 data = recorder.record(numframes=samplerate * duration)
-                print(data)
+                print("data")
 
                 wav_io = io.BytesIO()
                 sf.write(wav_io, data, samplerate, format='WAV', subtype='PCM_16')
