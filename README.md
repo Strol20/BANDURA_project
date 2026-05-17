@@ -10,7 +10,7 @@
 
 ## 🛠 Технологічний стек
 * **Мови програмування:** Python 3.10+
-* **Бібліотеки Python:** `shazamio`, `soundcard`, `soundfile`, `asyncio`
+* **Бібліотеки Python:** `shazamio`, `soundcard`, `soundfile`, `asyncio`, `pystray`, `Pillow`
 * **Середовище розробки:**  PyCharm
 
 ## 🚀 Встановлення та запуск
