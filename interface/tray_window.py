@@ -1,12 +1,14 @@
 import tkinter as tk
 from tkinter import filedialog
 import threading
+import soundcard as sc
 import asyncio
 import sys
 import os
 import urllib.request
 import io
 from audioProces.shazamioFinder import shazamio_finder
+from tkinter import ttk
 
 try:
     from PIL import Image, ImageTk
@@ -94,19 +96,25 @@ class BanduraWindow(tk.Toplevel):
         sep(self._inner, BG3)
 
         # ── Джерело ──
+
+        speaker_list = [speaker.name for speaker in sc.all_speakers()]
+        # На случай, если устройств нет, задаем дефолтное значение
+        default_value = speaker_list[0] if speaker_list else "Устройства не найдены"
+
         src_frame = tk.Frame(self._inner, bg=BG, pady=12, padx=16)
         src_frame.pack(fill="x")
+
         tk.Label(src_frame, text="SOURCE", font=FONT_SMALL,
                  fg=TEXT_MUT, bg=BG).pack(anchor="w")
-        self._src_var = tk.StringVar(value="HyperX")
-        tk.Entry(src_frame, textvariable=self._src_var,
-                 font=FONT_BODY, bg=BG3, fg=TEXT,
-                 insertbackground=ACCENT, relief="flat", bd=0,
-                 highlightthickness=1, highlightbackground=BORDER,
-                 highlightcolor=ACCENT).pack(
-                     fill="x", pady=(4, 0), ipady=6, ipadx=8)
 
-        sep(self._inner, BG3)
+        self._src_var = tk.StringVar(value=default_value)
+
+        # Заменяем tk.Entry на ttk.Combobox
+        src_combo = ttk.Combobox(src_frame, textvariable=self._src_var,
+                                 values=speaker_list, state="readonly",
+                                 font=FONT_BODY)
+
+        src_combo.pack(fill="x", pady=(4, 0), ipady=6, ipadx=8)
 
         # ── Режим ──
         mode_frame = tk.Frame(self._inner, bg=BG, pady=12, padx=16)
